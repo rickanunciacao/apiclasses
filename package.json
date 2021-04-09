@@ -1,0 +1,23 @@
+{
+  "name": "apiclasses",
+  "version": "0.0.1",
+  "description": "test app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rickanunciacao/apiclasses.git"
+  },
+  "author": "Henrique Anunciacao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rickanunciacao/apiclasses/issues"
+  },
+  "homepage": "https://github.com/rickanunciacao/apiclasses#readme",
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
