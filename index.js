@@ -12,7 +12,7 @@ app.use(bodyParser.json()); //use json as language for data back and forth
 app.use(logger('dev')); //logger middleware that will log to console what requests were made
 app.use(require('./routes')); // in case of using routes. This is pointing to the file routes.js
 
-app.listen(port,function(err){
+app.listen(port, function (err) {
     console.log('Listening to port ' + port);
 })
 
@@ -28,15 +28,15 @@ http.createServer((req, res)=>{
 */
 
 
-let users = [];                  
-(async function getNames(){
-    try{
-        const {data} = await axios.get("https://jsonplaceholder.typicode.com/users");
-        users = data.map(user=>user.name);
+let users = [];
+(async function getNames() {
+    try {
+        const { data } = await axios.get("https://jsonplaceholder.typicode.com/users");
+        users = data.map(user => user.name);
         emails = data.map(email => email.email)
         console.log(users)
         console.log(emails)
-    } catch(error){
+    } catch (error) {
         console.log(error)
     }
 })()
@@ -47,12 +47,12 @@ let users = [];
 // Trying with the Starwars API
 
 let people = [];
-(async function getPeople(){
-    try{
-        const {data} = await axios.get("http://swapi.dev/api/people/");
-        people = data.results.map(person=>person.name);
+(async function getPeople() {
+    try {
+        const { data } = await axios.get("http://swapi.dev/api/people/");
+        people = data.results.map(person => person.name);
         console.log(people)
-    } catch(error){
+    } catch (error) {
         console.log(error)
     }
 })()
@@ -61,12 +61,12 @@ let people = [];
 
 
 let planets = [];
-(async function getPlanets(){
-    try{
-        const {data} = await axios.get("http://swapi.dev/api/planets/");
-        planets = data.results.map(planet=>planet.name);
+(async function getPlanets() {
+    try {
+        const { data } = await axios.get("http://swapi.dev/api/planets/");
+        planets = data.results.map(planet => planet.name);
         console.log(planets)
-    } catch(error){
+    } catch (error) {
         console.log(error)
     }
 })()
