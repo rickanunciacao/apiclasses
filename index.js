@@ -5,24 +5,12 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-
-
 var app = express();
 var port = 8000;
 
-
-app.use(bodyParser.json())
-
-
-app.get('/hello/:foo/:bar',(req,res) => {
-
-    res.json({message: "Hello World", data:[req.params.foo, req.params.bar]});
-
-});
-
-
-
-
+app.use(bodyParser.json()); //use json as language for data back and forth
+app.use(logger('dev')); //logger middleware that will log to console what requests were made
+app.use(require('./routes')); // in case of using routes. This is pointing to the file routes.js
 
 app.listen(port,function(err){
     console.log('Listening to port ' + port);
