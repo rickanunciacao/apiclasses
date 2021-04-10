@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/rickanunciacao/apiclasses#readme",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "morgan": "^1.10.0"
   }
 }
