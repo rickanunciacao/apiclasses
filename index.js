@@ -1,5 +1,34 @@
 const http = require('http');
 const axios = require('axios').default;
+const logger = require('morgan');
+const cors = require('cors');
+const express = require('express');
+const bodyParser = require('body-parser');
+
+
+
+var app = express();
+var port = 8000;
+
+
+app.use(bodyParser.json())
+
+
+app.get('/hello/:foo/:bar',(req,res) => {
+
+    res.json({message: "Hello World", data:[req.params.foo, req.params.bar]});
+
+});
+
+
+
+
+
+app.listen(port,function(err){
+    console.log('Listening to port ' + port);
+})
+
+/*
 
 http.createServer((req, res)=>{
     res.write(users.join("\n")); //display the list of users on the page
@@ -8,7 +37,7 @@ http.createServer((req, res)=>{
     res.end();                   //end the response
 }).listen(8000);                 // listen for requests on port 8000
 
-
+*/
 
 
 let users = [];                  
