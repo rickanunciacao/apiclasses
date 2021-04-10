@@ -4,6 +4,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 var app = express();
 var port = 8000;
@@ -11,6 +12,31 @@ var port = 8000;
 app.use(bodyParser.json()); //use json as language for data back and forth
 app.use(logger('dev')); //logger middleware that will log to console what requests were made
 app.use(require('./routes')); // in case of using routes. This is pointing to the file routes.js
+
+
+
+// Connection to the DB
+
+const dbURI = "mongodb://localhost/test";
+
+mongoose.connect(dbURI,{useNewUrlParser: true, UseUnifiedTopology: true})
+        .then((result) => console.log('connected to db'))
+        .catch((err) => console.log(err));
+
+
+// mongoose.connect('mongodb://localhost/test');
+
+// mongoose.connection.on('error', (err) => { 
+//     console.log('Mongodb Error: ', err); 
+//     process.exit();
+// });
+// mongoose.connection.on('connected', () => { 
+//     console.log('MongoDB is successfully connected');
+// });
+
+
+
+
 
 app.listen(port, function (err) {
     console.log('Listening to port ' + port);
