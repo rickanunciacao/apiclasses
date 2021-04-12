@@ -13,8 +13,10 @@ var userSchema = new mongoose.Schema({
         type: String,
         enum: ['MALE', 'FEMALE']
     },
-    phone: Number 
-});
+    phone: Number
+},
+{timestamps: true}
+);
 
 // creating the user table, using the schema above
 module.exports = mongoose.model('User', userSchema);
