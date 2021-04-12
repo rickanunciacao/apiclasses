@@ -22,32 +22,44 @@ exports.uploadImage = function(req, res) {
         res.status(201).send({newImage})
     });
 
-
-
-
-
-    var newimage = new Image(req.body);
-    newimage.save(function (err, image) { 
-        if (err) { 
-            res.status (400).json(err);
-        }
-
-        res.json(image); 
-});
-
-
 };
 
 // Read SINGLE Image
 
-exports.getImage = function(req, res) {
-  Image.findOne({_id: req.params.id}, function (err, image) {
-    if (err) {
-      res.status(400).json(err);
-    } 
-    res.json(image);
-  });
+exports.getImages = function(req, res) {
+  
+    Image.find({}, '-__V').lean().exec((err, images => {
+
+        if(err){
+            return res.sendStatus(400);
+        }
+
+        for (let i = 0; i < images.length; i++){
+            var img = images[i];
+            img.url = req.protocol + '://' + req.get('host') + '/images/' + img._id;
+        }
+
+        res.json(images);
+
+    }))
+    
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Read ALL Images
