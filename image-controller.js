@@ -26,23 +26,17 @@ exports.uploadImage = function(req, res) {
 
 // Read SINGLE Image
 
-exports.getImages = function(req, res) {
-  
-    Image.find({}, '-__V').lean().exec((err, images => {
+exports.getImage = function(req, res) {
+    let imgId = req.params.id;
 
-        if(err){
+    Image.findById(imgId, (err, image) => {
+        if (err) {
             return res.sendStatus(400);
         }
 
-        for (let i = 0; i < images.length; i++){
-            var img = images[i];
-            img.url = req.protocol + '://' + req.get('host') + '/images/' + img._id;
-        }
-
-        res.json(images);
-
-    }))
-    
+        res.setHeader('Content-Type', 'image/jpeg');
+        fs.createReadStream(path.join(UPLOAD_PATH, image.filename)).pipe(res);
+    });
 };
 
 
@@ -65,36 +59,38 @@ exports.getImages = function(req, res) {
 // Read ALL Images
 
 exports.getImages = function(req, res) {
-  Image.find({}, function (err, images) {
-    if (err) {
-      res.status(400).json(err); 
-    } 
-    res.json(images);
-  }); 
+    Image.find({}, '-__v')
+    .lean()
+    .exec((err, images) => {
+        if (err) {
+            return res.sendStatus(400);
+        }
+
+        for (let i = 0; i < images.length; i++) {
+            var img = images[i];
+            img.url = req.protocol + '://' + req.get('host') + '/images/' + img._id;
+        }
+
+        res.json(images);
+    });
 };
 
 
 
 
-// Update SINGLE Image TODO
 
-exports.updateUser = function(req, res) {
-  User.findOneAndUpdate({_id: req.params.id}, req.body, {new: true},function (err, user) {
-    if (err) {
-      res.status(400).json(err);
-    } 
-    res.json(user);
-  }); 
-};
+// Delete SINGLE Image
 
+exports.deleteImage = function(req, res) {
+    let imgId = req.params.id;
 
-// Delete SINGLE User
+    Image.findByIdAndRemove(imgId, (err, image) => {
+        if (err && image) {
+            return res.sendStatus(400);
+        }
 
-exports.deleteUser = function(req, res) {
-  User.findByIdAndRemove(req.params.id, function (err, user) {
-    if (err) {
-      res.status(400).json(err);
-    } 
-    res.json(user);
-  }); 
+        del([path.join(UPLOAD_PATH, image.filename)]).then(deleted => {
+            res.sendStatus(200);
+        });
+    });
 };

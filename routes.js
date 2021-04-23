@@ -32,5 +32,7 @@ var imageCtrl = require('./image-controller');
 
 router.post('/images', upload.single('image'), imageCtrl.uploadImage);
 router.get('/images', imageCtrl.getImages);
+router.get('/image/:id', imageCtrl.getImage);
+router.delete('/image/:id', imageCtrl.deleteImage);
 
 module.exports = router;
